@@ -12,9 +12,8 @@ limits:
     ".+?/api/payouts.+": 30s
     ".+?/ip?ipAddress=.+": 30s
 paymentMethods:
-  - ref: $paymentMethods.bank-transfer
+  - id: $ref.bank-transfer
     txTypes: ["deposit", "withdrawal"]
-    formViews: [noda.deposit, noda.deposit.de, noda.deposit.byBank, noda.deposit.byBank.de]
     timeouts:
       expireTimeout: 2h
       cancellationTimeout: 3h
@@ -25,21 +24,25 @@ paymentMethods:
         - id: deutsche-bank
           title: Deutsche Bank
           logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+          form: $ref.noda.deposit.de
         - id: unicredit
           title: UniCredit
           logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+          form: $ref.noda.deposit.de
         availableFor:
           query: "countryCode in ($1)"
           values:
-            $1: [ "AT" ]
+            $1: ["DE"]
       - list:
         - id: bank1
           title: Bank 1
           logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+          form: $ref.noda.deposit
         - id: bank2
           title: Bank 2
           logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+          form: $ref.noda.deposit
         availableFor:
           query: "countryCode in ($1)"
           values:
-            $1: [ "AT" ]
+            $1: ["AT","CH","FR"]
