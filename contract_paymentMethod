@@ -1,0 +1,104 @@
+paymentMethods:
+  - name: noda
+    id: 821e70e8-ff2a-426e-80da-5b17c7443aae # id на который будут линковаться операции. можно подмешать в байты соль напр merchantId и закодировать чтобы на разных мерчах айди были разные
+    title: Noda
+    type: banktransfer
+    logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+    txTypes:
+      deposit:
+        flags:
+          - createsCustomerAccount # это нужно для документации
+        credentials:
+          bankId:
+            ref: $commonParameters.bankId
+          merchantCustomerId:
+            ref: $commonParameters.merchantCustomerId
+          email:
+            ref: $commonParameters.email
+          bankIBAN:
+              ref: $commonParameters.iban
+        formViews:
+          noda.deposit:
+            id: 84d678d9-5414-4e99-a0a6-1678fd016e8d
+            paymentInstrument: 
+            parameters:
+              merchantCustomerId:        
+                minLen: 4
+                maxLen: 36
+                flags:
+                  - required 
+              email:
+                flags:
+                  - required     
+          noda.deposit.de:
+            id: 84d678d9-5414-4e99-a0a6-1678fd016e8d
+            paymentInstrument: 
+            parameters:
+              merchantCustomerId:
+                minLen: 4
+                maxLen: 45
+                flags:
+                  - required  
+              email:
+                flags:
+                  - required  
+              bankIBAN:
+                flags:
+                  - required                
+          noda.deposit.byBank:
+            id: 84d678d9-5414-4e99-a0a6-1678fd016e8d
+            paymentInstrument: $paymentInstrument.noda.banks
+            parameters:
+              bankId:
+                type: enum
+                options: $autogen.parameter.nodaBankId
+                flags:
+                  - required  
+              merchantCustomerId:
+                minLen: 4
+                maxLen: 55
+                flags:
+                  - required  
+              email:
+                flags:
+                  - required  
+              bankIBAN:
+                flags:
+                  - required  
+          noda.deposit.byBank.de:
+            id: 84d678d9-5414-4e99-a0a6-1678fd016e8d
+            paymentInstrument: $paymentInstrument.noda.banks
+            parameters:
+              merchantCustomerId:
+                minLen: 4
+                maxLen: 60
+                flags:
+                  - required  
+              email:
+                flags:
+                  - required  
+              bankIBAN:
+                flags:
+                  - required  
+paymentInstrument:
+  noda.banks:
+    - query: "countryCode in ($1)"
+      values:
+        $1: [ "AT" ] 
+      paymentInstrument:
+        - id: 84d678d9-5414-4e99-a0a6-1678fd016e8d 
+          title: Deutsche Bank
+          logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU 
+        - id: 84d678d9-5414-4e99-a0a6-1678fd016e8d 
+          title: UniCredit
+          logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU  
+    - query: "countryCode in ($1)"
+      values:
+        $1: [ "DE" ] 
+      paymentInstrument:
+        - id: 84d678d9-5414-4e99-a0a6-1678fd016e8d 
+          title: Bank 1
+          logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU 
+        - id: 84d678d9-5414-4e99-a0a6-1678fd016e8d 
+          title: Bank 2
+          logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU      
