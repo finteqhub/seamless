@@ -1,0 +1,45 @@
+kind: finteqhub/v1/integration
+id: noda # Эти контракты будут лежать в WLA и будут использоваться на весь white-label, соотстственно будет достаточно просто enum значения, а uuid уже записей об использовании интеграции в БД будут для каждого мерчанта своими
+title: Noda
+logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+limits:
+  rateLimit:
+    - by: "ip"
+      selector: ".+?/api/payments.+"
+      value: 10
+  httpTimeout:
+    ".+?/api/payments.+": 30s
+    ".+?/api/payouts.+": 30s
+    ".+?/ip?ipAddress=.+": 30s
+paymentMethods:
+  - ref: $paymentMethods.bank-transfer
+    txTypes: ["deposit", "withdrawal"]
+    formViews: [noda.deposit, noda.deposit.de, noda.deposit.byBank, noda.deposit.byBank.de]
+    timeouts:
+      expireTimeout: 2h
+      cancellationTimeout: 3h
+    operationTypes:
+      - charge
+    paymentInstruments:
+      - list:
+        - id: deutsche-bank
+          title: Deutsche Bank
+          logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+        - id: unicredit
+          title: UniCredit
+          logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+        availableFor:
+          query: "countryCode in ($1)"
+          values:
+            $1: [ "AT" ]
+      - list:
+        - id: bank1
+          title: Bank 1
+          logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+        - id: bank2
+          title: Bank 2
+          logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+        availableFor:
+          query: "countryCode in ($1)"
+          values:
+            $1: [ "AT" ]
