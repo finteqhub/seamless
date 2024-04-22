@@ -3,19 +3,19 @@ id: bank-transfer # аналогично как и с интеграциями �
 title: Bank transfer
 type: banktransfer
 logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
-txTypes:
+credentials:
   deposit:
     flags:
       - createsCustomerAccount # это нужно для документации
-credentials:
-  deposit:
-    bankId: $ref.types.bankId
-    merchantCustomerId:
-      type: string
-    email: $ref.types.email
-    IBAN: $ref.types.iban
+    fields:
+      bankId: $ref.types.bankId
+      merchantCustomerId:
+        type: string
+      email: $ref.types.email
+      IBAN: $ref.types.iban
   withdrawal:
-    customerAccountID: $ref.types.uuid
+    fields:
+      customerAccountID: $ref.types.uuid
 forms:
   - id: noda.deposit
     fields:
