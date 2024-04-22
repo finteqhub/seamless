@@ -1,0 +1,58 @@
+kind: finteqhub/v1.0.0/integration
+id: noda # Эти контракты будут лежать в WLA и будут использоваться на весь white-label, соотстственно будет достаточно просто enum значения, а uuid уже записей об использовании интеграции в БД будут для каждого мерчанта своими
+title: Noda
+logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+limits:
+  rateLimit:
+    - by: "ip"
+      selector: ".+?/api/payments.+"
+      value: 10
+  httpTimeout:
+    ".+?/api/payments.+": 30s
+    ".+?/api/payouts.+": 30s
+    ".+?/ip?ipAddress=.+": 30s
+deposit:
+  - id: $ref.paymentMethods.bank-transfer
+    capabilities: [ "charge", "adjustments", "customerAccounts" ]
+    timeouts:
+      expireTimeout: 2h
+      cancellationTimeout: 3h
+    forms:
+      default: $ref.forms.noda.deposit
+      paymentInstruments:
+        - when:
+            - sessionCountry: [ "DE" ]
+          list:
+            - id: deutsche-bank
+              title: Deutsche Bank
+              logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+              form: $ref.forms.noda.deposit.de
+            - id: unicredit
+              title: UniCredit
+              logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+              form: $ref.forms.noda.deposit.de
+        - when:
+            - sessionCountry: [ "AT","CH","FR" ]
+              currency: [ "EUR","CHF" ]
+            - sessionCountry: [ "ES" ]
+              currency: [ "EUR" ]
+          list:
+            - id: bank1
+              title: Bank 1
+              logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+              form: $ref.forms.noda.deposit
+            - id: bank2
+              title: Bank 2
+              logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+              form: $ref.forms.noda.deposit
+withdrawal:
+  - id: $ref.paymentMethods.another-payment-method
+    capabilities: [ "charge" ]
+    forms:
+      default: $ref.forms.another-payment-method.withdrawal
+      conditional:
+        - when:
+            - sessionCountry: [ "DE" ]
+          form: $ref.forms.another-payment-method.withdrawal.de
+    timeouts:
+      cancellationTimeout: 3h

@@ -1,0 +1,35 @@
+kind: finteqhub/v1.0.0/paymentMethod
+id: bank-transfer # аналогично как и с интеграциями не нужон тут uuid, достаточно enum
+title: Bank transfer
+type: banktransfer
+logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+credentials:
+  deposit:
+    bankId: $ref.types.bankId
+    merchantCustomerId:
+      type: string
+    email: $ref.types.email
+    IBAN: $ref.types.iban
+  withdrawal:
+    customerAccountID: $ref.types.uuid
+forms:
+  - id: noda.deposit
+    fields:
+      - id: merchantCustomerId
+        flags: [ required ]
+        validations: # TODO: Здесь как будто надо уметь перезаписывать валидацию от типа из schema.yml
+          - minLen: 4
+          - maxLen: 36
+      - id: email
+        flags: [ required ]
+  - id: noda.deposit.de
+    fields:
+      - id: merchantCustomerId
+        flags: [ required ]
+        validations: # TODO: Здесь как будто надо уметь перезаписывать валидацию от типа из schema.yml
+          - minLen: 4
+          - maxLen: 36
+      - id: email
+        flags: [ required ]
+      - id: IBAN
+        flags: [ required ]
