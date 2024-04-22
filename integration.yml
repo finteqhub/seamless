@@ -1,4 +1,4 @@
-kind: finteqhub/v1/integration
+kind: finteqhub/v1.0.0/integration
 id: noda # Эти контракты будут лежать в WLA и будут использоваться на весь white-label, соотстственно будет достаточно просто enum значения, а uuid уже записей об использовании интеграции в БД будут для каждого мерчанта своими
 title: Noda
 logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
@@ -21,9 +21,7 @@ deposit:
       default: $ref.forms.noda.deposit
       paymentInstruments:
         - when:
-            query: "countryCode in ($1)"
-            values:
-              $1: [ "DE" ]
+            - sessionCountry: [ "DE" ]
           list:
             - id: deutsche-bank
               title: Deutsche Bank
@@ -34,9 +32,10 @@ deposit:
               logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
               form: $ref.forms.noda.deposit.de
         - when:
-            query: "countryCode in ($1)"
-            values:
-              $1: [ "AT","CH","FR" ]
+            - sessionCountry: [ "AT","CH","FR" ]
+              currency: [ "EUR","CHF" ]
+            - sessionCountry: [ "ES" ]
+              currency: [ "EUR" ]
           list:
             - id: bank1
               title: Bank 1
@@ -53,9 +52,7 @@ withdrawal:
       default: $ref.forms.another-payment-method.withdrawal
       conditional:
         - when:
-            query: "countryCode in ($1)"
-            values:
-              $1: [ "DE" ]
+            - sessionCountry: [ "DE" ]
           form: $ref.forms.another-payment-method.withdrawal.de
     timeouts:
       cancellationTimeout: 3h
