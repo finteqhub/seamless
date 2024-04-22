@@ -1,0 +1,10 @@
+# TODO: надо посмотреть как прикрутить json schema к ямолу
+bankId:
+  type: number
+  min: 1000000
+  max: 9999999
+email:
+  type: string
+  format: email # https://json-schema.org/understanding-json-schema/reference/string#built-in-formats
+iban:
+  type: string

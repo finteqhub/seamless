@@ -7,34 +7,33 @@ txTypes:
   deposit:
     flags:
       - createsCustomerAccount # это нужно для документации
-credentials: # есть ли сценарий, когда структура полей кредов отличается для выплат и депозитов?
-  fields:
-    bankId:
-      ref: $commonParameters.bankId
+credentials:
+  deposit:
+    bankId: $ref.types.bankId
     merchantCustomerId:
-      ref: $commonParameters.merchantCustomerId
-    email:
-      ref: $commonParameters.email
-    IBAN:
-      ref: $commonParameters.iban
-  forms: # == formViews
-   - id: noda.deposit
-     fields:
+      type: string
+    email: $ref.types.email
+    IBAN: $ref.types.iban
+  withdrawal:
+    customerAccountID: $ref.types.uuid
+forms:
+  - id: noda.deposit
+    fields:
       - id: merchantCustomerId
-        flags: [required, storedInCustomerAccount]
-        validations: # Я бы здесь покурил в сторону какого DSL для описания валидаций, например: https://json-schema.org/draft/2020-12/json-schema-validation
+        flags: [ required ]
+        validations: # TODO: Здесь как будто надо уметь перезаписывать валидацию от типа из schema.yml
           - minLen: 4
           - maxLen: 36
       - id: email
-        flags: [required]
-   - id: noda.deposit.de
-     fields:
-       - id: merchantCustomerId
-         flags: [required]
-         validations: # Я бы здесь покурил в сторону какого DSL для описания валидаций, например: https://json-schema.org/draft/2020-12/json-schema-validation
-           - minLen: 4
-           - maxLen: 36
-       - id: email
-         flags: [required, storedInCustomerAccount]
-       - id: IBAN
-         flags: [required, storedInCustomerAccount]
+        flags: [ required ]
+  - id: noda.deposit.de
+    fields:
+      - id: merchantCustomerId
+        flags: [ required ]
+        validations: # TODO: Здесь как будто надо уметь перезаписывать валидацию от типа из schema.yml
+          - minLen: 4
+          - maxLen: 36
+      - id: email
+        flags: [ required ]
+      - id: IBAN
+        flags: [ required ]

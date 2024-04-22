@@ -13,7 +13,7 @@ limits:
     ".+?/ip?ipAddress=.+": 30s
 paymentMethods:
   - id: $ref.bank-transfer
-    txTypes: ["deposit", "withdrawal"]
+    txTypes: [ "deposit", "withdrawal" ]
     timeouts:
       expireTimeout: 2h
       cancellationTimeout: 3h
@@ -21,28 +21,28 @@ paymentMethods:
       - charge
     paymentInstruments:
       - list:
-        - id: deutsche-bank
-          title: Deutsche Bank
-          logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
-          form: $ref.noda.deposit.de
-        - id: unicredit
-          title: UniCredit
-          logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
-          form: $ref.noda.deposit.de
+          - id: deutsche-bank
+            title: Deutsche Bank
+            logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+            form: $ref.forms.noda.deposit.de
+          - id: unicredit
+            title: UniCredit
+            logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+            form: $ref.forms.noda.deposit.de
         availableFor:
           query: "countryCode in ($1)"
           values:
-            $1: ["DE"]
+            $1: [ "DE" ]
       - list:
-        - id: bank1
-          title: Bank 1
-          logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
-          form: $ref.noda.deposit
-        - id: bank2
-          title: Bank 2
-          logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
-          form: $ref.noda.deposit
+          - id: bank1
+            title: Bank 1
+            logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+            form: $ref.forms.noda.deposit
+          - id: bank2
+            title: Bank 2
+            logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgwp1dAaa6BkjK-OXbxG8Rovpmxiq5qwnl899xRYJ0i1zqzlb3hagBCfmZQkEbgBIsN5c&usqp=CAU
+            form: $ref.forms.noda.deposit
         availableFor:
           query: "countryCode in ($1)"
           values:
-            $1: ["AT","CH","FR"]
+            $1: [ "AT","CH","FR" ]
