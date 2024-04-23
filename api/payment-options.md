@@ -1,4 +1,4 @@
-## POST /v1/{txtype}/payment-options
+## POST /v1/{txType}/payment-options
 
 in
 ```json
