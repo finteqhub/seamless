@@ -61,3 +61,45 @@ commonParameters:
     description: Unique identifier of Customer on Merchant’s side
     friendlyName: Customer’s ID on Merchant’s side
     i18nId: merchantCustomerId
+
+  billingAddress:
+    type: struct
+    parameters:
+      countryCode:
+        ref: $formats.countryCode
+        example: US
+        title: Country
+        i18nId: countryCode
+      state:
+        title: State
+        i18nId: state
+        type: enum
+        conditional:
+        - when:
+          - countryCode: [ "US" ]
+          then: 
+            ref: $formats.usStates
+            flags: 
+              - required
+        - when:
+          - countryCode: [ "CA" ]
+          then: 
+            ref: $formats.caStates
+        - when:
+          - countryCode: [ "LV", "BY" ]
+          then: 
+            ref: $formats.none
+      city:
+        title: City
+        i18nId: city
+        type: enum
+        conditional:
+        - when:
+          - countryCode: [ "US" ]
+          - state: [ "CO" ]
+          then: 
+            ref: $formats.usCoCities
+      zip:
+        title: ZIP Code
+        i18nId: zip
+        type: string
