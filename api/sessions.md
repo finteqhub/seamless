@@ -1,4 +1,4 @@
-## POST /v1/sessions/{UUID}
+## GET /v1/sessions/{UUID}
 
 out
 ```json
