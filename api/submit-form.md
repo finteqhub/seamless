@@ -38,9 +38,10 @@ in
             "state": "US"
         }
     },
-  formView: "emerchantpay.cardAcquirer"
-  paymentMethod: "card-acquirer"
-  integration: "emerchantpay"
+  "formView": "emerchantpay.cardAcquirer",
+  "paymentMethod": "card-acquirer",
+  "integration": "emerchantpay",
+  "customerAccountId": "3051932a-fdd2-48fa-b330-7e7d41535969"
 }
 ```
 
