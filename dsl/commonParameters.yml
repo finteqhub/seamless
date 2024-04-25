@@ -1,0 +1,105 @@
+commonParameters:
+  email:
+    ref: $formats.email
+    title: Email
+    i18nId: email
+    example: example@com
+  account:
+    ref: $formats.email
+    title: Account
+    i18n: account
+    example: example@com
+  birthDate:
+    ref: $formats.date
+    title: Birth Date
+    i18nId: birthDate
+  countryCode:
+    ref: $formats.countryCode
+    example: DE
+    title: Country
+    i18nId: countryCode
+  phoneNumber:
+    type: struct
+    parameters:
+      phoneCountryCode:
+        ref: $formats.phoneCountryCode
+        title: Phone Code
+        i18nId: phoneCountryCode
+        example: 62
+      phoneNumber:
+        ref: $formats.phoneNumber
+        title: Phone Number
+        i18nId: phoneNumber
+        example: 715151918
+  iban:
+    ref: $formats.IBAN
+    title: iban
+    i18nId: iban
+    obfuscate: true # нужно ли обфусцировать?
+    flags:
+      - required
+  bankAccountName:
+    type: string
+    minLen: 4
+    maxLen: 50
+    i18nId: bankAccountName
+    obfuscate: true # нужно ли обфусцировать?
+    flags:
+      - required  
+  bankAccountId:
+    type: string
+    minLen: 4
+    maxLen: 100
+    i18nId: bankAccountId
+    obfuscate: true # нужно ли обфусцировать?
+    flags:
+      - required        
+  merchantCustomerId:
+    type: string
+    minLen: 4
+    maxLen: 50
+    description: Unique identifier of Customer on Merchant’s side
+    friendlyName: Customer’s ID on Merchant’s side
+    i18nId: merchantCustomerId
+
+  billingAddress:
+    type: struct
+    parameters:
+      countryCode:
+        ref: $formats.countryCode
+        example: US
+        title: Country
+        i18nId: countryCode
+      state:
+        title: State
+        i18nId: state
+        type: enum
+        conditional:
+        - when:
+          - countryCode: [ "US" ]
+          then: 
+            ref: $formats.usStates
+            flags: 
+              - required
+        - when:
+          - countryCode: [ "CA" ]
+          then: 
+            ref: $formats.caStates
+        - when:
+          - countryCode: [ "LV", "BY" ]
+          then: 
+            ref: $formats.none
+      city:
+        title: City
+        i18nId: city
+        type: enum
+        conditional:
+        - when:
+          - countryCode: [ "US" ]
+          - state: [ "CO" ]
+          then: 
+            ref: $formats.usCoCities
+      zip:
+        title: ZIP Code
+        i18nId: zip
+        type: string

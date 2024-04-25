@@ -8,6 +8,7 @@ credentials:
     bankId: $ref.types.bankId
     merchantCustomerId:
       type: string
+      flags: ["prefillableFromCustomerProfile"]
     email: $ref.types.email
     IBAN: $ref.types.iban
   withdrawal:
